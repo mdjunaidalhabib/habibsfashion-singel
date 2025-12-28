@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Container from "./Container";
 import {
   FaWhatsapp,
@@ -8,6 +8,9 @@ import {
 } from "react-icons/fa";
 import { siteData } from "../data/siteData";
 import useActiveSection from "../hooks/useActiveSection";
+
+// ✅ Logo import
+import logo from "../assets/logo-512.png";
 
 export default function Navbar() {
   const waLink = `https://wa.me/${siteData.whatsappNumber}`;
@@ -19,6 +22,9 @@ export default function Navbar() {
   // Mobile menu state
   const [open, setOpen] = useState(false);
 
+  // Mobile menu wrapper ref (outside click close)
+  const mobileMenuRef = useRef(null);
+
   // Close menu when resizing to desktop
   useEffect(() => {
     const onResize = () => {
@@ -28,37 +34,66 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  // Body scroll lock when menu open
+  useEffect(() => {
+    if (open) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "";
+    return () => (document.body.style.overflow = "");
+  }, [open]);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!open) return;
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [open]);
+
+  // Smooth scroll helper
+  const goTo = (id) => {
+    setOpen(false);
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const linkClass = (id) =>
     `w-full rounded-xl px-3 py-2 text-sm font-extrabold transition ${
       activeId === id
-        ? "bg-pink-500 text-white"
-        : "text-slate-700 hover:bg-[#FF4FA3]"
+        ? "bg-[#FF4FA3] text-white"
+        : "text-slate-800 hover:bg-[#FF4FA3] hover:text-white"
     }`;
 
   const desktopLinkClass = (id) =>
     `rounded-xl px-3 py-2 text-sm font-extrabold transition ${
       activeId === id
-        ? "bg-[#FF4FA3] text-slate-800"
-        : "text-slate-900 hover:bg-[#FF4FA3]"
+        ? "bg-[#FF4FA3] text-white shadow-sm"
+        : "text-slate-900 hover:bg-[#FF4FA3] hover:text-white"
     }`;
 
-  const handleNavClick = () => {
-    setOpen(false); // mobile menu auto close
-  };
-
   return (
-    <header className="sticky top-0 z-50 border-b border-black/5 bg-pink-300 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-black/5 bg-pink-300/90 backdrop-blur">
       <Container>
         <nav className="flex items-center justify-between py-3 gap-4">
-          {/* Brand */}
-          <a
-            href="#home"
-            className="flex items-center gap-3"
-            onClick={handleNavClick}
+          {/* ✅ Brand with Logo */}
+          <button
+            onClick={() => goTo("home")}
+            className="flex items-center gap-3 text-left"
+            type="button"
           >
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-slate-900 text-white font-black shadow">
-              HF
+            <div className="h-11 w-11 overflow-hidden rounded-xl border border-white/30 bg-[#FF4FA3] shadow-sm">
+              <img
+                src={logo}
+                alt="Habib’s Fashion Logo"
+                className="h-full w-full object-contain"
+                loading="lazy"
+              />
             </div>
+
             <div className="leading-tight">
               <div className="font-extrabold text-slate-900">
                 {siteData.brand}
@@ -67,29 +102,44 @@ export default function Navbar() {
                 Female Bags • Free Delivery
               </div>
             </div>
-          </a>
+          </button>
 
           {/* Desktop Menu */}
           <div className="hidden items-center gap-2 md:flex">
-            <a className={desktopLinkClass("home")} href="#home">
+            <button
+              className={desktopLinkClass("home")}
+              onClick={() => goTo("home")}
+              type="button"
+            >
               Home
-            </a>
-            <a className={desktopLinkClass("products")} href="#products">
+            </button>
+            <button
+              className={desktopLinkClass("products")}
+              onClick={() => goTo("products")}
+              type="button"
+            >
               Products
-            </a>
-            <a className={desktopLinkClass("delivery")} href="#delivery">
+            </button>
+            <button
+              className={desktopLinkClass("delivery")}
+              onClick={() => goTo("delivery")}
+              type="button"
+            >
               Delivery
-            </a>
-            <a className={desktopLinkClass("contact")} href="#contact">
+            </button>
+            <button
+              className={desktopLinkClass("contact")}
+              onClick={() => goTo("contact")}
+              type="button"
+            >
               Contact
-            </a>
+            </button>
           </div>
 
           {/* Right Actions */}
           <div className="flex items-center gap-2">
             {/* Desktop buttons */}
             <div className="hidden md:flex items-center gap-2">
-              {/* WhatsApp Button */}
               <a
                 href={waLink}
                 target="_blank"
@@ -100,7 +150,6 @@ export default function Navbar() {
                 WhatsApp
               </a>
 
-              {/* Inbox Button */}
               <a
                 href={siteData.facebook}
                 target="_blank"
@@ -115,7 +164,7 @@ export default function Navbar() {
             {/* Mobile Hamburger */}
             <button
               onClick={() => setOpen((s) => !s)}
-              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#FF4FA3]  bg-pink-200 text-slate-900 hover:bg-pink-200"
+              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#FF4FA3] bg-pink-200 text-slate-900 hover:bg-pink-100 transition"
               aria-label="Toggle menu"
               type="button"
             >
@@ -124,39 +173,42 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* Mobile Dropdown Menu */}
+        {/* ✅ Mobile Dropdown Menu */}
         {open && (
           <div className="md:hidden pb-4">
-            <div className="rounded-2xl border border-slate-200 bg-pink-50 p-3 shadow-sm">
+            <div
+              ref={mobileMenuRef}
+              className="rounded-2xl border border-slate-200 bg-pink-50 p-3 shadow-sm"
+            >
               <div className="grid gap-2">
-                <a
+                <button
                   className={linkClass("home")}
-                  href="#home"
-                  onClick={handleNavClick}
+                  onClick={() => goTo("home")}
+                  type="button"
                 >
                   Home
-                </a>
-                <a
+                </button>
+                <button
                   className={linkClass("products")}
-                  href="#products"
-                  onClick={handleNavClick}
+                  onClick={() => goTo("products")}
+                  type="button"
                 >
                   Products
-                </a>
-                <a
+                </button>
+                <button
                   className={linkClass("delivery")}
-                  href="#delivery"
-                  onClick={handleNavClick}
+                  onClick={() => goTo("delivery")}
+                  type="button"
                 >
                   Delivery
-                </a>
-                <a
+                </button>
+                <button
                   className={linkClass("contact")}
-                  href="#contact"
-                  onClick={handleNavClick}
+                  onClick={() => goTo("contact")}
+                  type="button"
                 >
                   Contact
-                </a>
+                </button>
 
                 {/* Mobile Buttons */}
                 <div className="mt-2 grid gap-2">
@@ -165,7 +217,7 @@ export default function Navbar() {
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#1EBE5D] transition"
-                    onClick={handleNavClick}
+                    onClick={() => setOpen(false)}
                   >
                     <FaWhatsapp className="text-lg" />
                     Order on WhatsApp
@@ -176,7 +228,7 @@ export default function Navbar() {
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#FF4FA3] bg-pink-50 px-3 py-2 text-sm font-semibold text-[#FF4FA3] shadow-sm hover:bg-[#FF4FA3] hover:text-white transition"
-                    onClick={handleNavClick}
+                    onClick={() => setOpen(false)}
                   >
                     <FaFacebookMessenger className="text-lg" />
                     Inbox on Facebook
