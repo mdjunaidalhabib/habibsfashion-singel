@@ -28,11 +28,11 @@ export default function HeroSlider() {
 
   return (
     <section id="home" className="relative overflow-hidden">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-amber-50 via-white to-white" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-amber-50 via-pink-100 to-pink-200" />
       <Container>
-        <div className="grid items-center gap-10 py-12 md:grid-cols-2 md:py-16">
+        <div className="grid items-center gap-10 py-4 md:grid-cols-2 md:py-14">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-2 text-sm font-bold text-amber-900">
+            <div className="inline-flex items-center gap-2 rounded-full bg-amber-200 px-4 py-2 text-sm font-bold text-amber-900">
               <FaShippingFast /> {siteData.offer}
             </div>
 
@@ -51,26 +51,27 @@ export default function HeroSlider() {
                 href={waLink}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 font-bold text-white hover:bg-slate-800"
+                className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#1EBE5D] transition"
               >
                 <FaWhatsapp className="text-lg" /> Order on WhatsApp
               </a>
 
               <a
                 href="#products"
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 font-bold text-slate-900 hover:bg-slate-50"
+                className="inline-flex items-center gap-2 rounded-xl border border-[#FF4FA3] bg-pink-50 px-4 py-3 text-sm font-extrabold  text-[#FF4FA3] shadow-sm hover:bg-[#FF4FA3] hover:text-white transition"
               >
                 View Products
               </a>
             </div>
 
-            <p className="mt-4 text-sm text-slate-500">
-              📞 Call/WhatsApp: <span className="font-semibold">{siteData.phone}</span>
+            <p className="mt-4 text-sm text-slate-600">
+              📞 Call/WhatsApp:{" "}
+              <span className="font-semibold">{siteData.phone}</span>
             </p>
           </div>
 
           <div className="relative">
-            <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+            <div className="overflow-hidden rounded-3xl border border-slate-200 bg-pink-50 shadow-sm">
               <div className="relative h-80 w-full bg-slate-100">
                 <img
                   src={active.image}
@@ -79,7 +80,7 @@ export default function HeroSlider() {
                   loading="lazy"
                 />
 
-                <div className="absolute left-4 top-4 rounded-full bg-amber-400 px-3 py-1 text-xs font-extrabold text-slate-900">
+                <div className="absolute left-4 top-4 rounded-full bg-pink-500 px-3 py-1 text-xs  text-slate-100">
                   {active.badge}
                 </div>
 
@@ -105,11 +106,19 @@ export default function HeroSlider() {
               </div>
 
               <div className="p-6">
-                <div className="text-xs font-bold text-slate-500">Featured Product</div>
-                <div className="mt-1 text-2xl font-extrabold text-slate-900">{active.name}</div>
+                <div className="text-xs font-bold text-slate-500">
+                  Featured Product
+                </div>
+                <div className="mt-1 text-2xl font-extrabold text-slate-900">
+                  {active.name}
+                </div>
                 <div className="mt-2 flex items-center justify-between">
-                  <div className="text-sm font-semibold text-slate-600">✅ COD Available</div>
-                  <div className="text-2xl font-extrabold text-slate-900">৳ {active.price}</div>
+                  <div className="text-sm font-semibold text-slate-600">
+                    ✅ COD Available
+                  </div>
+                  <div className="text-2xl font-extrabold text-slate-900">
+                    ৳ {active.price}
+                  </div>
                 </div>
 
                 <div className="mt-5 flex items-center justify-center gap-2">

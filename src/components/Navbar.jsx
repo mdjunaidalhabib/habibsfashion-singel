@@ -31,15 +31,15 @@ export default function Navbar() {
   const linkClass = (id) =>
     `w-full rounded-xl px-3 py-2 text-sm font-extrabold transition ${
       activeId === id
-        ? "bg-slate-900 text-white"
-        : "text-slate-700 hover:bg-slate-100"
+        ? "bg-pink-500 text-white"
+        : "text-slate-700 hover:bg-[#FF4FA3]"
     }`;
 
   const desktopLinkClass = (id) =>
     `rounded-xl px-3 py-2 text-sm font-extrabold transition ${
       activeId === id
-        ? "bg-slate-900 text-white"
-        : "text-slate-600 hover:bg-slate-100"
+        ? "bg-[#FF4FA3] text-slate-800"
+        : "text-slate-900 hover:bg-[#FF4FA3]"
     }`;
 
   const handleNavClick = () => {
@@ -47,7 +47,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-black/5 bg-white/80 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-black/5 bg-pink-300 backdrop-blur">
       <Container>
         <nav className="flex items-center justify-between py-3 gap-4">
           {/* Brand */}
@@ -63,7 +63,7 @@ export default function Navbar() {
               <div className="font-extrabold text-slate-900">
                 {siteData.brand}
               </div>
-              <div className="text-xs text-slate-500">
+              <div className="text-xs text-slate-900">
                 Female Bags • Free Delivery
               </div>
             </div>
@@ -89,20 +89,23 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             {/* Desktop buttons */}
             <div className="hidden md:flex items-center gap-2">
+              {/* WhatsApp Button */}
               <a
                 href={waLink}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+                className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#1EBE5D] transition"
               >
                 <FaWhatsapp className="text-lg" />
                 WhatsApp
               </a>
+
+              {/* Inbox Button */}
               <a
                 href={siteData.facebook}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                className="inline-flex items-center gap-2 rounded-xl border border-[#FF4FA3] bg-pink-50 px-3 py-2 text-sm font-semibold text-[#FF4FA3] shadow-sm hover:bg-[#FF4FA3] hover:text-white transition"
               >
                 <FaFacebookMessenger className="text-lg" />
                 Inbox
@@ -112,7 +115,7 @@ export default function Navbar() {
             {/* Mobile Hamburger */}
             <button
               onClick={() => setOpen((s) => !s)}
-              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-900 hover:bg-slate-50"
+              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#FF4FA3]  bg-pink-200 text-slate-900 hover:bg-pink-200"
               aria-label="Toggle menu"
               type="button"
             >
@@ -124,7 +127,7 @@ export default function Navbar() {
         {/* Mobile Dropdown Menu */}
         {open && (
           <div className="md:hidden pb-4">
-            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+            <div className="rounded-2xl border border-slate-200 bg-pink-50 p-3 shadow-sm">
               <div className="grid gap-2">
                 <a
                   className={linkClass("home")}
@@ -161,7 +164,7 @@ export default function Navbar() {
                     href={waLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 font-extrabold text-white hover:bg-slate-800"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#1EBE5D] transition"
                     onClick={handleNavClick}
                   >
                     <FaWhatsapp className="text-lg" />
@@ -172,7 +175,7 @@ export default function Navbar() {
                     href={siteData.facebook}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 font-extrabold text-slate-900 hover:bg-slate-50"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#FF4FA3] bg-pink-50 px-3 py-2 text-sm font-semibold text-[#FF4FA3] shadow-sm hover:bg-[#FF4FA3] hover:text-white transition"
                     onClick={handleNavClick}
                   >
                     <FaFacebookMessenger className="text-lg" />

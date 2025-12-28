@@ -69,8 +69,11 @@ export default function Products() {
   const products = useMemo(() => siteData.products, []);
 
   return (
-    <section id="products" className="py-12 md:py-16">
-      <Container>
+    <section
+      id="products"
+      className="py-12 md:py-16 bg-gradient-to-b from-pink-100 via-pink-50 to-pink-50"
+    >
+      <Container className="">
         <div className="flex flex-col items-start justify-between gap-3 md:flex-row md:items-end">
           <div>
             <h2 className="text-3xl font-extrabold text-slate-900">Our Bags</h2>
@@ -97,8 +100,12 @@ export default function Products() {
                 ref={(node) => {
                   if (node) cardRefs.current[p.slug] = node;
                 }}
-                className={`group overflow-hidden rounded-3xl border bg-white shadow-sm transition hover:shadow-md
-                  ${isHighlighted ? "border-amber-400 ring-4 ring-amber-200" : "border-slate-200"}
+                className={`group overflow-hidden rounded-3xl border bg-pink-100 shadow-sm transition hover:shadow-md
+                  ${
+                    isHighlighted
+                      ? "border-amber-400 ring-4 ring-amber-200"
+                      : "border-slate-200"
+                  }
                 `}
               >
                 <div className="relative h-64 w-full overflow-hidden bg-slate-100">
@@ -109,24 +116,30 @@ export default function Products() {
                     loading="lazy"
                   />
 
-                  <div className="absolute left-4 top-4 rounded-full bg-amber-400 px-3 py-1 text-xs font-extrabold text-slate-900">
+                  <div className="absolute left-4 top-4 rounded-full bg-[#FF4FA3] px-3 py-1 text-xs text-slate-900">
                     {p.badge}
                   </div>
 
-                  <div className="absolute right-4 top-4 rounded-full bg-slate-900/90 px-3 py-1 text-xs font-extrabold text-white">
+                  <div className="absolute right-4 top-4 rounded-full bg-[#FF4FA3] px-3 py-1 text-xs font-extrabold text-white">
                     FREE DELIVERY
                   </div>
 
-                  <div className="absolute bottom-4 left-4 rounded-2xl bg-white/90 px-4 py-2 backdrop-blur">
-                    <div className="text-xs font-bold text-slate-500">Price</div>
-                    <div className="text-2xl font-extrabold text-slate-900">৳ {p.price}</div>
+                  <div className="absolute bottom-4 left-4 rounded-2xl bg-pink-50 px-4 py-2 backdrop-blur">
+                    <div className="text-xs font-bold text-slate-500">
+                      Price
+                    </div>
+                    <div className="text-2xl font-extrabold text-slate-900">
+                      ৳ {p.price}
+                    </div>
                   </div>
                 </div>
 
                 <div className="p-6">
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                     <div>
-                      <h3 className="text-xl font-extrabold text-slate-900">{p.name}</h3>
+                      <h3 className="text-xl font-extrabold text-slate-900">
+                        {p.name}
+                      </h3>
                       <p className="mt-1 text-sm font-semibold text-slate-600">
                         ✅ Cash on Delivery Available
                       </p>
@@ -134,7 +147,7 @@ export default function Products() {
 
                     <button
                       onClick={() => copyToClipboard(p.slug, shareLink)}
-                      className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-extrabold text-slate-900 hover:bg-slate-50"
+                      className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#FF4FA3] bg-pink-50 px-3 py-2 text-sm font-extrabold text-slate-900 hover:bg-pink-100"
                       type="button"
                       aria-label="Copy product link"
                       title="Copy product link"
@@ -153,7 +166,10 @@ export default function Products() {
 
                   <div className="mt-4 grid gap-2">
                     {p.features.map((f, idx) => (
-                      <div key={idx} className="flex items-start gap-2 text-slate-700">
+                      <div
+                        key={idx}
+                        className="flex items-start gap-2 text-slate-700"
+                      >
                         <FaCheckCircle className="mt-1 text-green-600" />
                         <span>{f}</span>
                       </div>
@@ -165,7 +181,7 @@ export default function Products() {
                       href={waLink}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-amber-500 px-4 py-3 font-extrabold text-slate-900 hover:bg-amber-400"
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#FF4FA3] px-4 py-3 font-extrabold text-slate-900 hover:bg-pink-500"
                     >
                       <FaWhatsapp className="text-lg" />
                       Buy Now on WhatsApp
@@ -176,7 +192,7 @@ export default function Products() {
                         href={fbShareUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 font-extrabold text-slate-900 hover:bg-slate-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-2xl border border-[#FF4FA3] bg-pink-50 px-4 py-3 font-extrabold text-slate-900 hover:bg-pink-100"
                       >
                         <FaFacebook className="text-lg" />
                         Share on Facebook
@@ -186,7 +202,7 @@ export default function Products() {
                         href={siteData.facebook}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 font-extrabold text-slate-900 hover:bg-slate-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-2xl border border-[#FF4FA3] bg-pink-50 px-4 py-3 font-extrabold text-slate-900 hover:bg-pink-100"
                       >
                         <FaFacebookMessenger className="text-lg" />
                         Share / Inbox
@@ -195,7 +211,9 @@ export default function Products() {
 
                     <div className="text-center text-xs text-slate-500">
                       Share link:{" "}
-                      <span className="font-semibold break-all">{shareLink}</span>
+                      <span className="font-semibold break-all">
+                        {shareLink}
+                      </span>
                     </div>
                   </div>
 

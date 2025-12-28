@@ -9,7 +9,7 @@ export default function FloatingWhatsApp() {
       href={waLink}
       target="_blank"
       rel="noreferrer"
-      className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full bg-green-500 px-4 py-3 font-extrabold text-slate-900 shadow-lg hover:bg-green-400"
+      className="fixed bottom-12 right-4 z-50 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#1EBE5D] transition"
       aria-label="Order on WhatsApp"
     >
       <FaWhatsapp className="text-xl" />
