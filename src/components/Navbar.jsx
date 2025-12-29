@@ -76,7 +76,7 @@ export default function Navbar() {
     }`;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-black/5 bg-pink-300/90 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-black/5 bg-[#FF4FA3] backdrop-blur">
       <Container>
         <nav className="flex items-center justify-between py-3 gap-4">
           {/* ✅ Brand with Logo */}
