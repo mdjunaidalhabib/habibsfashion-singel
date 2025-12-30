@@ -71,7 +71,7 @@ export default function Navbar() {
   const desktopLinkClass = (id) =>
     `rounded-xl px-3 py-2 text-sm font-extrabold transition ${
       activeId === id
-        ? "bg-[#FF4FA3] text-white shadow-sm"
+        ? "bg-[#25D366] text-white shadow-sm"
         : "text-slate-900 hover:bg-[#FF4FA3] hover:text-white"
     }`;
 
