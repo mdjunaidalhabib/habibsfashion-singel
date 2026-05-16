@@ -19,23 +19,34 @@ export default function Products() {
 
   const makeWaLink = (productName, price) => {
     const msg = `Assalamu Alaikum. Ami Habib’s Fashion er "${productName}" (Price: ৳${price}) order korte chai. Delivery FREE & Cash on Delivery available?`;
-    return `https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+
+    return `https://wa.me/${
+      siteData.whatsappNumber
+    }?text=${encodeURIComponent(msg)}`;
   };
 
   const copyToClipboard = async (slug, link) => {
     try {
       await navigator.clipboard.writeText(link);
+
       setCopiedSlug(slug);
+
       setTimeout(() => setCopiedSlug(null), 2000);
     } catch (e) {
       const textarea = document.createElement("textarea");
+
       textarea.value = link;
+
       document.body.appendChild(textarea);
+
       textarea.select();
+
       document.execCommand("copy");
+
       document.body.removeChild(textarea);
 
       setCopiedSlug(slug);
+
       setTimeout(() => setCopiedSlug(null), 2000);
     }
   };
@@ -43,26 +54,39 @@ export default function Products() {
   useEffect(() => {
     const readHashProduct = () => {
       const hash = window.location.hash || "";
+
       if (!hash.startsWith("#products")) return;
 
       const qIndex = hash.indexOf("?");
+
       if (qIndex === -1) return;
 
       const query = hash.slice(qIndex + 1);
+
       const params = new URLSearchParams(query);
+
       const slug = params.get("product");
 
       if (slug) {
         setActiveSlug(slug);
+
         setTimeout(() => {
           const el = cardRefs.current[slug];
-          if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+
+          if (el) {
+            el.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          }
         }, 200);
       }
     };
 
     readHashProduct();
+
     window.addEventListener("hashchange", readHashProduct);
+
     return () => window.removeEventListener("hashchange", readHashProduct);
   }, []);
 
@@ -73,10 +97,11 @@ export default function Products() {
       id="products"
       className="py-12 md:py-16 bg-gradient-to-b from-pink-100 via-pink-50 to-pink-50"
     >
-      <Container className="">
+      <Container>
         <div className="flex flex-col items-start justify-between gap-3 md:flex-row md:items-end">
           <div>
             <h2 className="text-3xl font-extrabold text-slate-900">Our Bags</h2>
+
             <p className="mt-2 text-slate-600">
               ✅ Free Delivery • ✅ Cash on Delivery • ✅ Premium Quality
             </p>
@@ -86,12 +111,13 @@ export default function Products() {
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           {products.map((p) => {
             const waLink = makeWaLink(p.name, p.price);
+
             const shareLink = getProductShareLink(p.slug);
 
             const isHighlighted = activeSlug && activeSlug === p.slug;
 
             const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-              shareLink
+              shareLink,
             )}`;
 
             return (
@@ -101,14 +127,14 @@ export default function Products() {
                   if (node) cardRefs.current[p.slug] = node;
                 }}
                 className={`group overflow-hidden rounded-3xl border bg-pink-100 shadow-sm transition hover:shadow-md
-                  ${
-                    isHighlighted
-                      ? "border-amber-400 ring-4 ring-amber-200"
-                      : "border-slate-200"
-                  }
-                `}
+                ${
+                  isHighlighted
+                    ? "border-amber-400 ring-4 ring-amber-200"
+                    : "border-slate-200"
+                }`}
               >
-                <div className="relative h-64 w-full overflow-hidden bg-slate-100">
+                {/* IMAGE SECTION */}
+                <div className="relative h-80 md:h-96 w-full overflow-hidden bg-slate-100">
                   <img
                     src={p.image}
                     alt={p.name}
@@ -116,54 +142,62 @@ export default function Products() {
                     loading="lazy"
                   />
 
-                  <div className="absolute left-4 top-4 rounded-full bg-[#FF4FA3] px-3 py-1 text-xs text-slate-900">
+                  {/* BADGE */}
+                  <div className="absolute left-4 top-4 rounded-full bg-[#FF4FA3] px-3 py-1 text-xs font-bold text-slate-900">
                     {p.badge}
                   </div>
 
+                  {/* FREE DELIVERY */}
                   <div className="absolute right-4 top-4 rounded-full bg-[#FF4FA3] px-3 py-1 text-xs font-extrabold text-white">
                     FREE DELIVERY
                   </div>
 
+                  {/* PRICE */}
                   <div className="absolute bottom-4 left-4 rounded-2xl bg-pink-50 px-4 py-2 backdrop-blur">
                     <div className="text-xs font-bold text-slate-500">
                       Price
                     </div>
+
                     <div className="text-2xl font-extrabold text-slate-900">
                       ৳ {p.price}
                     </div>
                   </div>
                 </div>
 
+                {/* CONTENT */}
                 <div className="p-6">
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <h3 className="text-xl font-extrabold text-slate-900">
                         {p.name}
                       </h3>
+
                       <p className="mt-1 text-sm font-semibold text-slate-600">
                         ✅ Cash on Delivery Available
                       </p>
                     </div>
 
+                    {/* COPY LINK */}
                     <button
                       onClick={() => copyToClipboard(p.slug, shareLink)}
                       className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#FF4FA3] bg-pink-50 px-3 py-2 text-sm font-extrabold text-slate-900 hover:bg-pink-100"
                       type="button"
-                      aria-label="Copy product link"
-                      title="Copy product link"
                     >
                       {copiedSlug === p.slug ? (
                         <>
-                          <FaCheck className="text-green-600" /> Copied
+                          <FaCheck className="text-green-600" />
+                          Copied
                         </>
                       ) : (
                         <>
-                          <FaLink /> Copy Link
+                          <FaLink />
+                          Copy Link
                         </>
                       )}
                     </button>
                   </div>
 
+                  {/* FEATURES */}
                   <div className="mt-4 grid gap-2">
                     {p.features.map((f, idx) => (
                       <div
@@ -171,11 +205,13 @@ export default function Products() {
                         className="flex items-start gap-2 text-slate-700"
                       >
                         <FaCheckCircle className="mt-1 text-green-600" />
+
                         <span>{f}</span>
                       </div>
                     ))}
                   </div>
 
+                  {/* BUTTONS */}
                   <div className="mt-6 grid gap-3">
                     <a
                       href={waLink}
@@ -209,6 +245,7 @@ export default function Products() {
                       </a>
                     </div>
 
+                    {/* SHARE LINK */}
                     <div className="text-center text-xs text-slate-500">
                       Share link:{" "}
                       <span className="font-semibold break-all">
@@ -217,6 +254,7 @@ export default function Products() {
                     </div>
                   </div>
 
+                  {/* ACTIVE PRODUCT */}
                   {isHighlighted && (
                     <div className="mt-4 rounded-2xl bg-amber-50 p-3 text-sm font-bold text-amber-900">
                       ✅ You opened this product link

@@ -15,7 +15,7 @@ export const siteData = {
       id: 1,
       name: "𝐒𝐞𝐪𝐮𝐢𝐧𝐞𝐝 𝐁𝐚𝐠𝐬",
       slug: "sequined-bags",
-      price: 1100,
+      price: 800,
       badge: "Best Seller",
       image: sequinedBagImg,
       features: [
@@ -29,7 +29,7 @@ export const siteData = {
       id: 2,
       name: "𝐂𝐫𝐨𝐬𝐬𝐛𝐨𝐝𝐲 𝐁𝐚𝐠𝐬",
       slug: "crossbody-shoulder-bags",
-      price: 2500,
+      price: 1800,
       badge: "Premium",
       image: crossbodyBagImg,
       features: [
